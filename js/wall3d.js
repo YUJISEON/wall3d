@@ -13,12 +13,12 @@
 
     function resizeHandler() {
         maxScrollValue = document.body.offsetHeight - window.innerHeight;
-        console.log("maxScrollValue : " + maxScrollValue);
+        //console.log("maxScrollValue : " + maxScrollValue);
     }
 
     window.addEventListener('scroll', ()=>{
-        console.log("window.pageYOffset : " + window.pageYOffset);
-        console.log("scrollPer : " + window.pageYOffset / maxScrollValue);
+        //console.log("window.pageYOffset : " + window.pageYOffset);
+        //console.log("scrollPer : " + window.pageYOffset / maxScrollValue);
 
         let scrollPer = window.pageYOffset / maxScrollValue;
         let zMove = scrollPer * 970;
@@ -29,6 +29,12 @@
         // progress bar
         barElem.style.width = (scrollPer * 100) + "%"
        
+    })
+
+    stageElem.addEventListener('click', (e)=>{
+        new Character({
+            xPos : e.clientX / window.innerWidth * 100
+        });
     })
     
     window.addEventListener('resize', resizeHandler)
@@ -43,7 +49,7 @@
 
         mousePos.x = -1 + (e.clientX / window.innerWidth) * 2;
         mousePos.y = 1 - (e.clientY / window.innerHeight) * 2;
-        console.log(mousePos);
+        //console.log(mousePos);
         stageElem.style.transform  = 'rotateX(' + (mousePos.y*5) + 'deg) rotateY('+ (mousePos.x*5) +'deg)' 
     })
 })();
