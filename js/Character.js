@@ -33,7 +33,7 @@ function Character(info) {
     this.scrollState = false; // 스크롤 중인지, 아닌지
     this.lastScrollTop = 0; // 바로 이전 스크롤 위치
     this.xPos = info.xPos;
-    this.speed = 0.3; // 스피드
+    this.speed = info.speed; // 스피드 랜덤
     this.direction; // 방향
     this.runingState = false // 좌우 이동 중인지, 아닌지
     this.rafId;
@@ -102,6 +102,7 @@ Character.prototype = {
             console.log("키다운"); 
             if( e.keyCode == 37) {
                 // 왼쪽
+                //console.log("left");
                 self.direction = 'left';
                 self.mainElem.setAttribute('data-direction', 'left');
                 self.mainElem.classList.add('running');
@@ -112,9 +113,11 @@ Character.prototype = {
                 //self.mainElem.style.left = self.xPos + "%";
             } else if ( e.keyCode == 39 ) {
                 // 오른쪽
+                //console.log("right");
                 self.direction = 'right';
                 self.mainElem.setAttribute('data-direction', 'right');
                 self.mainElem.classList.add('running');
+                
                 //self.run()
                 self.run(self);
                 self.runingState = true;
@@ -126,16 +129,22 @@ Character.prototype = {
         window.addEventListener('keyup', (e)=>{
             self.mainElem.classList.remove('running');
             cancelAnimationFrame(self.rafId);
+            self.runingState = false;
         });
     },
     run: function(self) {
         //const self = this;
 
+        
+
         if( self.direction == 'left') {
             self.xPos -= self.speed;
-        } else if ( self.direction == 'rigth') {
+        } else if ( self.direction == 'right') {
             self.xPos += self.speed;
         }
+
+        if (self.xPos < 2) { self.xPos = 2; }
+        if (self.xPos > 88) { self.xPos = 88; }
 
         // this가 가르키는 요소가 바껴서 오류 발생
         // 자바스크립트는 실행되는 문맥에 따라서 this 값이 변경
@@ -143,7 +152,7 @@ Character.prototype = {
         // >> requestAnimationFrame(self.run);
         // 해결 방안 (1) 함수의 매개변수로 전달해서 this를 살리는 방법
         //           (2) bind 메서드로 this를 직접 지정하기
-        console.log(self);
+        // console.log(self);
         self.mainElem.style.left  = self.xPos + "%";
 
         self.rafId = requestAnimationFrame(function() {
@@ -155,7 +164,7 @@ Character.prototype = {
 
     //     if( self.direction == 'left') {
     //         self.xPos -= self.speed;
-    //     } else if ( self.direction == 'rigth') {
+    //     } else if ( self.direction == 'right') {
     //         self.xPos += self.speed;
     //     }
         

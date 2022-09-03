@@ -26,6 +26,7 @@ body {
     -webkit-overflow-scrolling: touch;
     color: #555;
     background: #fff000;    
+    transition: background 0.5s;
 }
 
 .world {    
@@ -186,6 +187,11 @@ body {
 .character.running .character-leg-right { animation: ani-running-leg 0.2s alternate infinite linear; }
 .character.running .character-leg-left { animation: ani-running-leg 0.2s alternate-reverse infinite linear; }
 .character.running .character-arm { animation: ani-running-arm 0.2s alternate infinite linear; }
+
+
+body[data-char='ragirl'] {
+    background: orange;
+}
 
 body[data-char='ragirl'] .character {
     width: 12vw;
